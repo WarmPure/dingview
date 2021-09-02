@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String androidId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-
         btn = findViewById(R.id.btn_startDraw);
         btnAction = findViewById(R.id.btn_startAction);
         dingView = findViewById(R.id.dingView);

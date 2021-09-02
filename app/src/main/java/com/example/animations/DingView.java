@@ -20,15 +20,11 @@ import java.util.Random;
 
 public class DingView extends View {
 
-
     // 通用  矩形
     private RectF rectF;
 
-    // 嘴巴 矩形
-    private RectF rectFMouth;
-
+    // 嘴巴 是否动画
     private boolean mouthTalkFlag = false;
-
 
     // 画笔
     // 红色 画笔
@@ -43,7 +39,6 @@ public class DingView extends View {
     private Paint painHead;
 
     // 百分比
-
     // 丁
     private ValueAnimator valueAnimatorDing;
     private int progressDing = 0;
@@ -92,7 +87,6 @@ public class DingView extends View {
     private ValueAnimator valueAnimatorLeftArm;
     private ValueAnimator valueAnimatorRightArm;
 
-
     private Point pointLeftEar = new Point();
     private Point pointRightEar = new Point();
     private Point pointBody = new Point();
@@ -104,27 +98,19 @@ public class DingView extends View {
 
     public DingView(Context context) {
         super(context);
-
-        Log.i("-------", "1");
     }
 
     public DingView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
-        Log.i("-------", "2");
     }
 
     public DingView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        Log.i("-------", "3");
     }
 
     private void init() {
-
         rectF = new RectF();
-
-        rectFMouth = new RectF();
-
         paintRed = new Paint();
         paintRed.setColor(Color.rgb(255, 155, 192));
         paintRed.setStyle(Paint.Style.STROKE);
@@ -157,11 +143,9 @@ public class DingView extends View {
         painHead.setStrokeWidth(2f);
         painHead.setAntiAlias(true);
         painHead.setAlpha(200);
-
     }
 
     private void initIntAnim() {
-
         // 丁
         valueAnimatorDing = ValueAnimator.ofInt(0, 100);
         valueAnimatorDing.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -171,7 +155,7 @@ public class DingView extends View {
                 invalidate();
             }
         });
-        valueAnimatorDing.setDuration(1000);
+        valueAnimatorDing.setDuration(700);
 
         // 眼睛
         valueAnimatorEyes = ValueAnimator.ofInt(0, 100);
@@ -182,7 +166,7 @@ public class DingView extends View {
                 invalidate();
             }
         });
-        valueAnimatorEyes.setDuration(800);
+        valueAnimatorEyes.setDuration(500);
 
         valueAnimatorEyein = ValueAnimator.ofInt(0, 100);
         valueAnimatorEyein.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -234,7 +218,7 @@ public class DingView extends View {
                 invalidate();
             }
         });
-        valueAnimatorMouth.setDuration(2000);
+        valueAnimatorMouth.setDuration(1000);
 
         // 头
         valueAnimatorHead = ValueAnimator.ofInt(0, 100);
@@ -245,7 +229,7 @@ public class DingView extends View {
                 invalidate();
             }
         });
-        valueAnimatorHead.setDuration(2000);
+        valueAnimatorHead.setDuration(1000);
 
         // 腿
         valueAnimatorLegs = ValueAnimator.ofInt(0, 100);
@@ -256,7 +240,7 @@ public class DingView extends View {
                 invalidate();
             }
         });
-        valueAnimatorLegs.setDuration(1000);
+        valueAnimatorLegs.setDuration(500);
 
         // 脚
         valueAnimatorFoots = ValueAnimator.ofInt(0, 100);
@@ -267,7 +251,7 @@ public class DingView extends View {
                 invalidate();
             }
         });
-        valueAnimatorFoots.setDuration(400);
+        valueAnimatorFoots.setDuration(300);
     }
 
     private void initPath() {
@@ -289,7 +273,6 @@ public class DingView extends View {
         });
         valueAnimatorLeftEar.setDuration(1000);
 
-
         // 右耳朵
         ViewPath viewPathRightEar = new ViewPath();
         pointRightEar.x = dp2px(277);
@@ -308,7 +291,6 @@ public class DingView extends View {
         });
         valueAnimatorRightEar.setDuration(1000);
 
-
         // 身体
         ViewPath viewPathBody = new ViewPath();
         pointBody.x = dp2px(165);
@@ -325,7 +307,6 @@ public class DingView extends View {
             }
         });
         valueAnimatorBody.setDuration(1000);
-
 
         // 左胳膊
         ViewPath viewPathLeftArm = new ViewPath();
@@ -344,7 +325,6 @@ public class DingView extends View {
         });
         valueAnimatorLeftArm.setDuration(1000);
 
-
         // 右胳膊
         ViewPath viewPathRightArm = new ViewPath();
         pointRightArm.x = dp2px(218);
@@ -362,7 +342,6 @@ public class DingView extends View {
         });
         valueAnimatorRightArm.setDuration(1000);
 
-
         animatorSet = new AnimatorSet();
         // 设置动画集合，按顺序绘制
         animatorSet.playSequentially(valueAnimatorDing, valueAnimatorEyes, valueAnimatorEyein, valueAnimatorLine1, valueAnimatorLine2, valueAnimatorLine3, valueAnimatorMouth, valueAnimatorHead, valueAnimatorLeftEar, valueAnimatorRightEar, valueAnimatorBody, valueAnimatorLeftArm, valueAnimatorRightArm, valueAnimatorLegs, valueAnimatorFoots);
@@ -371,7 +350,6 @@ public class DingView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
         if (widthMeasureSpec > 0) {
             if (!isInitPath) {
                 isInitPath = true;
@@ -396,7 +374,7 @@ public class DingView extends View {
         //  丁
         if (progressDing > 0) {
             painDing.setAlpha(progressDing);
-            canvas.drawText("丁", getWidth() / 3f, getHeight() * progressDing / 300f, painDing);
+            canvas.drawText("丁", getWidth() / 3.6f, getHeight() * progressDing / 320f, painDing);
         }
 
         // 重新设置画笔为描边
@@ -432,21 +410,19 @@ public class DingView extends View {
         canvas.drawLine(dp2px(160), dp2px(50), dp2px(160 + 50 * progressLine1 / 100f), dp2px(50), paintRed);
         canvas.drawLine(dp2px(160), dp2px(60), dp2px(160 + 50 * progressLine2 / 100f), dp2px(60), paintRed);
         canvas.drawLine(dp2px(155), dp2px(70), dp2px(155 + 60 * progressLine3 / 100f), dp2px(70), paintRed);
-
 //        canvas.drawLines(linesArr1, paintRed);
 //        canvas.drawLines(linesArr2, paintRed);
 //        canvas.drawLines(linesArr3, paintRed);
 
-
         // 嘴巴
-        if (!mouthTalkFlag) {
-            rectFMouth.set(dp2px(155), dp2px(220), dp2px(155 + 40 * progressMouth / 100f), dp2px(250));
-            canvas.drawRect(rectFMouth, painMouth);
-        } else {
-            rectFMouth.set(dp2px(155), dp2px(220), dp2px(195), dp2px(getNum(221, 255)));
-            canvas.drawRect(rectFMouth, painMouth);
+        if (progressMouth > 0) {
+            if (!mouthTalkFlag) {
+                rectF.set(dp2px(155), dp2px(240), dp2px(155 + 40 * progressMouth / 100f), dp2px(260));
+            } else {
+                rectF.set(dp2px(155), dp2px(240), dp2px(195), dp2px(getNum(221, 255)));
+            }
+            canvas.drawRect(rectF, painMouth);
         }
-
 
         // 脑袋 轮廓
         rectF.set(dp2px(66), dp2px(20), dp2px(282), dp2px(280));
@@ -455,7 +431,7 @@ public class DingView extends View {
             // 如果进度不完整，只进行描边操作
             painHead.setStyle(Paint.Style.STROKE);
         } else {
-            // 如果进度完整，即环形绘制完成，设置画笔为填充模式,设置填充及描边（FILL_AND_STROKE）也行
+            // 绘制完成，设置画笔模式  FILL_AND_STROKE
 //            painHead.setStyle(Paint.Style.FILL);
 //            painHead.setAlpha(7);
         }
@@ -470,7 +446,6 @@ public class DingView extends View {
         pathRightEar.lineTo(pointRightEar.x, pointRightEar.y);
         canvas.drawPath(pathRightEar, paintRed);
 
-
         canvas.rotate(15, dp2px(getContext(), 225), dp2px(getContext(), 130));
 
         // 身体
@@ -484,7 +459,6 @@ public class DingView extends View {
         // 右胳膊
         pathRightArm.lineTo(pointRightArm.x, pointRightArm.y);
         canvas.drawPath(pathRightArm, paintRed);
-
 
         // 腿和脚，需要内容填充
         paintRed.setStyle(Paint.Style.FILL);
@@ -545,13 +519,6 @@ public class DingView extends View {
         pathRightArm.reset();
     }
 
-    /**
-     * 生成一个startNum 到 endNum之间的随机数(不包含endNum的随机数)
-     *
-     * @param startNum
-     * @param endNum
-     * @return
-     */
     public static int getNum(int startNum, int endNum) {
         if (endNum > startNum) {
             Random random = new Random();
