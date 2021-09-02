@@ -32,11 +32,14 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
+                btn.setVisibility(View.GONE);
+                btnAction.setVisibility(View.GONE);
                 totalDuration = dingView.startAnimation();
                 if (totalDuration != -1) {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            btn.setVisibility(View.VISIBLE);
                             btnAction.setVisibility(View.VISIBLE);
                         }
                     },totalDuration);

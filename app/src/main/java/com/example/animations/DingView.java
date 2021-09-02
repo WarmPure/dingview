@@ -20,22 +20,16 @@ import java.util.Random;
 
 public class DingView extends View {
 
-    // 通用  矩形
     private RectF rectF;
 
     // 嘴巴 是否动画
     private boolean mouthTalkFlag = false;
 
     // 画笔
-    // 红色 画笔
     private Paint paintRed;
-    // 黑色 画笔
     private Paint paintBlack;
-    // 丁  字
     private Paint painDing;
-    // 嘴巴
     private Paint painMouth;
-    // 脑袋的轮廓
     private Paint painHead;
 
     // 百分比
@@ -419,7 +413,7 @@ public class DingView extends View {
             if (!mouthTalkFlag) {
                 rectF.set(dp2px(155), dp2px(240), dp2px(155 + 40 * progressMouth / 100f), dp2px(260));
             } else {
-                rectF.set(dp2px(155), dp2px(240), dp2px(195), dp2px(getNum(221, 255)));
+                rectF.set(dp2px(155), dp2px(240), dp2px(195), dp2px(getNum(220, 270)));
             }
             canvas.drawRect(rectF, painMouth);
         }
