@@ -18,6 +18,8 @@ import android.view.View;
 
 import java.util.Random;
 
+import static com.example.animations.Utils.getNum;
+
 public class DingView extends View {
 
     private RectF rectF;
@@ -353,18 +355,12 @@ public class DingView extends View {
         }
     }
 
-    // 抬头纹的三条线
-//    private float[] linesArr = new float[4];
-    private float[] linesArr1 = {dp2px(160), dp2px(60), dp2px(210), dp2px(60)};
-    private float[] linesArr2 = {dp2px(160), dp2px(50), dp2px(210), dp2px(50)};
-    private float[] linesArr3 = {dp2px(154), dp2px(70), dp2px(216), dp2px(70)};
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         // 旋转画布，结束还需旋转回去（在这里实现倾斜）
-        canvas.rotate(-15, dp2px(getContext(), 225), dp2px(getContext(), 150));
+        canvas.rotate(-15, dp2px(225), dp2px(150));
         //  丁
         if (progressDing > 0) {
             painDing.setAlpha(progressDing);
@@ -374,14 +370,11 @@ public class DingView extends View {
         // 重新设置画笔为描边
         paintRed.setStyle(Paint.Style.STROKE);
         // 眼睛部分：眼眶
-        // 左眼
         rectF.set(dp2px(110), dp2px(115), dp2px(140), dp2px(145));
         canvas.drawArc(rectF, 0, progressEyes * 3.6f, false, paintRed);
-
-        // 右眼
         rectF.set(dp2px(225), dp2px(115), dp2px(255), dp2px(145));
         canvas.drawArc(rectF, 0, progressEyes * 3.6f, false, paintRed);
-        // 黑眼球
+        // 眼球
         if (progressEyes < 100) {
             paintBlack.setStyle(Paint.Style.STROKE);
         } else {
@@ -404,9 +397,6 @@ public class DingView extends View {
         canvas.drawLine(dp2px(160), dp2px(50), dp2px(160 + 50 * progressLine1 / 100f), dp2px(50), paintRed);
         canvas.drawLine(dp2px(160), dp2px(60), dp2px(160 + 50 * progressLine2 / 100f), dp2px(60), paintRed);
         canvas.drawLine(dp2px(155), dp2px(70), dp2px(155 + 60 * progressLine3 / 100f), dp2px(70), paintRed);
-//        canvas.drawLines(linesArr1, paintRed);
-//        canvas.drawLines(linesArr2, paintRed);
-//        canvas.drawLines(linesArr3, paintRed);
 
         // 嘴巴
         if (progressMouth > 0) {
@@ -440,7 +430,7 @@ public class DingView extends View {
         pathRightEar.lineTo(pointRightEar.x, pointRightEar.y);
         canvas.drawPath(pathRightEar, paintRed);
 
-        canvas.rotate(15, dp2px(getContext(), 225), dp2px(getContext(), 130));
+        canvas.rotate(15, dp2px(225), dp2px(130));
 
         // 身体
         pathBody.lineTo(pointBody.x, pointBody.y);
@@ -465,60 +455,40 @@ public class DingView extends View {
         rectF.set(dp2px(156), dp2px(432), dp2px(156 + 20 * progressFoots / 100f), dp2px(444));
         canvas.drawRoundRect(rectF, dp2px(5), dp2px(5), paintBlack);
 
-        canvas.rotate(-15, dp2px(getContext(), 185), dp2px(getContext(), 432));
+        canvas.rotate(-15, dp2px(185), dp2px(432));
         rectF.set(dp2px(185), dp2px(432), dp2px(185 + 20 * progressFoots / 100f), dp2px(444));
         canvas.drawRoundRect(rectF, dp2px(5), dp2px(5), paintBlack);
-        canvas.rotate(15, dp2px(getContext(), 185), dp2px(getContext(), 432));
+        canvas.rotate(15, dp2px(185), dp2px(432));
     }
 
     private int dp2px(float dpValue) {
-        return dp2px(getContext(), dpValue);
-    }
-
-    public static int dp2px(Context context, float dpValue) {
-        float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
+        return Utils.dp2px(getContext(), dpValue);
     }
 
     public void startMouth() {
-
         mouthTalkFlag = true;
-
         valueAnimatorMouth.start();
         valueAnimatorEyein.start();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Long startAnimation() {
-
         reset();
         initPath();
         animatorSet.start();
-
         if (animatorSet.isStarted()) {
-
             return animatorSet.getTotalDuration();
         }
-
         return -1L;
     }
 
     private void reset() {
-
         mouthTalkFlag = false;
         pathLeftEar.reset();
         pathRightEar.reset();
         pathBody.reset();
         pathLeftArm.reset();
         pathRightArm.reset();
-    }
-
-    public static int getNum(int startNum, int endNum) {
-        if (endNum > startNum) {
-            Random random = new Random();
-            return random.nextInt(endNum - startNum) + startNum;
-        }
-        return 0;
     }
 
 }

@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
                             btnAction.setVisibility(View.VISIBLE);
                         }
                     },totalDuration);
-                }else {
-                    Toast.makeText(MainActivity.this,"计算动画时长异常",Toast.LENGTH_SHORT).show();
                 }
             }
         });
